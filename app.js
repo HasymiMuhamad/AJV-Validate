@@ -1,6 +1,7 @@
 //app.js ------------------------------------
 const express = require('express');
 const bodyParser = require('body-parser');
+const auth = require('./middleware/auth');
 
 require('./models/user');
 //const dataAdmin = require('./routes/admin');
@@ -21,8 +22,8 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connection : MongoDB'));
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb', extended: true, parameterLimit:50000}));
-app.use('/todoAPI/user', dataUser);
-app.use('/todoAPI/post', dataPost);
+app.use('/api/v1/user', dataUser);
+app.use('/api/v1/post', auth.isAuthenticated, dataPost);
 app.use(logger('dev'));
 app.use('/static', express.static('public'));
 

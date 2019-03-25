@@ -5,12 +5,12 @@ const router = express.Router();
 const app = express();
 
 
-router.post('/dataPost' , auth.isAuthenticated, postController.dataPost); 
+router.post('/' , postController.dataPost); 
 
-router.put('/update/:id',  auth.isAuthenticated, postController.dataUpdate);
+router.put('/:id', postController.dataUpdate);
 
-router.get('/:id', auth.isAuthenticated, postController.dataDetails); 
+router.get('/:id', postController.dataDetails); 
 
-router.delete('/delete/:id', auth.isAuthenticated, postController.dataDelete); 
+router.delete('/:id', postController.dataDelete); 
 
 module.exports = router;

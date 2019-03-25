@@ -6,16 +6,13 @@ const saltRounds = 10;
 const Ajv = require('ajv');
 const mongoose = require('mongoose');
 const memberValidate = require('../scheme/user');
-//var User = mongoose.model('User'); 
 var jwt = require('jsonwebtoken');
 const userSchema = require('../scheme/user.json');
 require('dotenv').config()
 
 
 
-
 exports.userCreate = function(req, res, next){
-    console.log(req.body);
     let user = new User(
         {
            // name : req.body.name,
@@ -33,15 +30,7 @@ exports.userCreate = function(req, res, next){
                 user.password = hash
                 user.save()
                 .then(function() {
-                    // const payload = {
-                    //     id: user._id,
-                    //     username: user.username
-                    // }
-                    // const token = jwt.sign(payload, 'jwtsecret', {
-                    //     algorithm: 'HS256'
-                    // });
                     res.status(400).json({
-                        // token : token,
                         body: user,
                     })
                 })
@@ -70,7 +59,7 @@ exports.authentication = (req, res) =>{
     let user = new User
     user.then(() => {
         const payload = {
-            //id : user._id,
+            id : user._id,
             username : user.username
         }
 
@@ -95,60 +84,7 @@ exports.authentication = (req, res) =>{
 
 }
 
-    // const token = req.headers.authorization;
-    // jwt.verify(token, 'jwtsecret', function(err, decoded) {
-    //     if (err) {
-    //         return res.status(400).json({
-    //             message: err
-    //         })
-    //     }
-
-    //     console.log(decoded);
-    //     const userId = decoded.id;
-    //     User.findById(userId, function(err, user) {
-    //         if (err) {
-    //             return res.status(400).json({
-    //                 message: err
-    //             })
-    //         }
-
-    //         return res.status(200).json({
-    //             body: user
-    //         })
-    //     })
-    // });
-
-    // exports.login = (req, res, next) => { 
-    //     let user = User.findOne({
-    //         username: req.body.username
-    //     }, (err,obj) => {
-    //         !err ? obj : console.log(err);
-    //     });
     
-    // user.then((user) => {
-    //     console.log(user);
-    //     console.log(req.body);
-    //     bcrypt.compare(req.body.password, user.password)
-    //     .then( (result) => {
-    //         if(result) {
-    
-    //           let token = jwt.sign(user.toJSON(),
-    //           process.env.SECRET_KEY,{
-    //           algorithm: 'HS256'
-    //           });
-    //         res.json({ message : "Successfully logged in!", token})
-    //        } else {
-    //            return res.status(401);
-    //            res.send({ message : "Wrong password!"})
-               
-    //        }
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    
-    
-    // })   
-// } 
 
 exports.login = (req, res) => {
     User.findOne({ username: req.body.username }, (err, userNote) => {
