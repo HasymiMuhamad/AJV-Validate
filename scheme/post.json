@@ -1,0 +1,12 @@
+{
+  
+    "title": "User",
+    "description": "User Profile",
+    "type": "object",
+    "properties": {
+  
+    "dataTitle": {"type":"string"},
+    "dataContent": { "type": "string" },
+    "dataWriter": {"type": "string"}
+  }
+}
